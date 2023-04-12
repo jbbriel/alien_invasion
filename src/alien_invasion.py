@@ -65,7 +65,7 @@ class AlienInvasion():
         # Create new fleet and recenter ship
         self._create_fleet()
         self.ship.center_ship()
-
+    
         pygame.mouse.set_visible(False)
 
 
