@@ -157,6 +157,7 @@ class AlienInvasion():
         if not self.aliens:
             self.bullets.empty()
             self._create_fleet()
+            self.settings.increase_speed()
             pygame.mouse.set_visible(True)
 
     def _check_aliens_bottom(self):
