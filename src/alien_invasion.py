@@ -45,10 +45,12 @@ class AlienInvasion():
     def _check_events(self):
         # Watch for keyboard and mouse event
         for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
+            if event.type == pygame.quit:
+                sys.exit()
+            elif event.type == pygame.KEYDOWN:
                 self._check_keydown_events(event)
             elif event.type == pygame.KEYUP:
-                 self._check_keyup_events(event)
+                self._check_keyup_events(event)
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
                 self._check_play_button(mouse_pos)
@@ -65,7 +67,8 @@ class AlienInvasion():
         # Create new fleet and recenter ship
         self._create_fleet()
         self.ship.center_ship()
-    
+
+        # Mouse goes invisible when game starts
         pygame.mouse.set_visible(False)
 
 
@@ -77,24 +80,22 @@ class AlienInvasion():
 
     def _check_keydown_events(self, event):
         """Respond to keypresses"""
-        if self.stats.game_active == True:
-            if event.key == pygame.K_RIGHT:
-                self.ship.moving_right = True
-            elif event.key == pygame.K_LEFT:
-                self.ship.moving_left = True
-            elif event.key == pygame.K_UP:
-                self.ship.moving_up = True
-            elif event.key == pygame.K_DOWN:
-                self.ship.moving_down = True
-            elif event.key == pygame.K_SPACE:
-                self._fire_bullets()
-            elif (event.type == pygame.K_p) and (not self.stats.game_active):
-                self._start_game()
-            elif event.key == pygame.K_ESCAPE:
-                sys.exit()
-        elif self.stats.game_active != True:
-            if event.key == pygame.K_ESCAPE:
-                sys.exit()
+        if event.key == pygame.K_RIGHT:
+            self.ship.moving_right = True
+        elif event.key == pygame.K_LEFT:
+            self.ship.moving_left = True
+        elif event.key == pygame.K_UP:
+            self.ship.moving_up = True
+        elif event.key == pygame.K_DOWN:
+            self.ship.moving_down = True
+        elif event.type == pygame.K_ESCAPE:
+            sys.exit()
+        elif event.key == pygame.K_SPACE:
+            self._fire_bullets()
+        elif (event.key == pygame.K_p) and (not self.stats.game_active):
+            # Don't start a new game during an active game, that's probably
+            #   an accidental keypress.
+            self._start_game()
 
     def _check_keyup_events(self, event):
         if event.key == pygame.K_RIGHT:
@@ -197,8 +198,8 @@ class AlienInvasion():
         self.aliens.update()
         if pygame.sprite.spritecollideany(self.ship, self.aliens):
             print("Ship Hit! Respawning ship!")
-            print(f"Ships available: {self.stats.ships_left}")
             self._ship_hit()
+            print(f"Ships available: {self.stats.ships_left}")
 
         self._check_fleet_edges()
         self._check_aliens_bottom()
