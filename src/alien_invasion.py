@@ -154,7 +154,8 @@ class AlienInvasion():
         self.settings.fleet_direction *= -1
 
     def _check_bullet_alien_collisions(self):
-        # Check for any bullets that habe hit aliens.
+        """Eliminates Aliens and adds points to score and high score"""
+        #Check for any bullets that have hit aliens.
         # if so, get rid of the bullet and the alien
         collisions = pygame.sprite.groupcollide(self.bullets, self.aliens,
                                             True, True)
