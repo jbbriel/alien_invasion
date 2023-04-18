@@ -29,7 +29,8 @@ class AlienInvasion():
         self.aliens = pygame.sprite.Group()
         self.stats = GameStats(self)
         self.sb = Scoreboard(self)
-        self.play_button = Button(self, "Play")
+        self.play_button = Button(self, "Play or Press 'P'")
+        self.quit_button = Button(self, "Quit")
 
         self._create_fleet()
 
@@ -54,6 +55,7 @@ class AlienInvasion():
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
                 self._check_play_button(mouse_pos)
+                # self._check_quit_button(mouse_pos)
 
     def _start_game(self):
         """Activate game and Reset Stats"""
@@ -79,6 +81,12 @@ class AlienInvasion():
             self.settings.initialize_dynamic_setting()
             self._start_game()
             self.sb.prep_score()
+            self.sb.prep_level()
+
+    # def _check_quit_button(self, mouse_pos):
+    #     button_clicked = self.quit_button.rect.collidepoint(mouse_pos)
+    #     if button_clicked and self.stats.game_active:
+    #         sys.exit()
 
     def _check_keydown_events(self, event):
         """Respond to keypresses"""
@@ -172,6 +180,10 @@ class AlienInvasion():
             self.ship.center_ship()
             self.settings.increase_speed()
 
+            # Increase level
+            self.stats.level +=1
+            self.sb.prep_level()
+
     def _check_aliens_bottom(self):
         """ Check if any aliens have reached the bottom of the screen"""
         screen_rect = self.screen.get_rect()
@@ -185,7 +197,8 @@ class AlienInvasion():
         # Decrease Ships left
         if self.stats.ships_left > 0:
             self.stats.ships_left -= 1
-
+            print("Ship Hit! Respawning ship!")
+            print(f"Ships available: {self.stats.ships_left}")
             #Pause
             sleep(1)
         else:
@@ -207,8 +220,6 @@ class AlienInvasion():
         """Update the postion of all the aliens  in the fleet"""
         self.aliens.update()
         if pygame.sprite.spritecollideany(self.ship, self.aliens):
-            print("Ship Hit! Respawning ship!")
-            print(f"Ships available: {self.stats.ships_left}")
             self._ship_hit()
 
 
@@ -239,6 +250,7 @@ class AlienInvasion():
         # Draw the Play button if the game is inactive
         if not self.stats.game_active:
             self.play_button.draw_button()
+            # self.quit_button.draw_button()
 
         # Make the most visibly drawn screen visible
         pygame.display.flip()
