@@ -82,6 +82,7 @@ class AlienInvasion():
             self._start_game()
             self.sb.prep_score()
             self.sb.prep_level()
+            self.sb.prep_ships()
 
     # def _check_quit_button(self, mouse_pos):
     #     button_clicked = self.quit_button.rect.collidepoint(mouse_pos)
@@ -197,8 +198,8 @@ class AlienInvasion():
         # Decrease Ships left
         if self.stats.ships_left > 0:
             self.stats.ships_left -= 1
-            print("Ship Hit! Respawning ship!")
-            print(f"Ships available: {self.stats.ships_left}")
+            self.sb.prep_ships()
+
             #Pause
             sleep(1)
         else:

@@ -12,7 +12,6 @@ class Alien(Sprite):
         self.rect = self.image.get_rect()
 
         # start each new alien at the top of the screen
-
         self.rect.x = self.rect.width
         self.rect.y = self.rect.height
 
