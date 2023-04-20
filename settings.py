@@ -16,7 +16,7 @@ class Settings():
         self.bullet_speed = 1.0
         self.bullet_width = 5
         self.bullet_height = 10
-        self.bullet_color = (60, 60, 60)
+        self.bullet_color = (255, 0, 0)
         self.bullets_allowed = 15
 
         # Scoring
@@ -43,20 +43,17 @@ class Settings():
             self.ship_speed = 2.0
             self.bullet_speed = 1.0
             self.alien_speed = 1.0
-
-            self.fleet_direction = 1
+            self.fleet_direction = 0.5
         elif self.difficulty_level == 'medium':
+            self.ship_speed = 2.5
+            self.bullet_speed = 1.5
+            self.alien_speed = 1.5
+            self.fleet_direction = 1.0
+        elif self.difficulty_level == 'hard':
             self.ship_speed = 3.0
             self.bullet_speed = 2.0
-            self.alien_speed = 2.0
-
-            self.fleet_direction = 1.5
-        elif self.difficulty_level == 'hard':
-            self.ship_speed = 3.5
-            self.bullet_speed = 2.5
-            self.alien_speed = 2.5
-
-            self.fleet_direction = 2.0
+            self.alien_speed = 1.5
+            self.fleet_direction = 2.5
 
     def increase_speed(self):
         # Increase speed settings and alienpoint values
