@@ -1,6 +1,6 @@
 # Alien Invaders
 #### **Alien Invaders Game with Difficulty level features**
-<img src="images/ai_game.png">
+<img src="images/ai_game.PNG">
 
 ## Requirements
 Install the Pygame Module with `pip`.
